@@ -1,12 +1,47 @@
-# React + Vite
+# Expense Tracker
+Link:- "https://stellar-treacle-2a6e29.netlify.app/"
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+Expense Tracker is a simple web application that helps users record, manage, and analyze their daily expenses. It provides an intuitive interface to track spending and maintain financial discipline.and 
 
-Currently, two official plugins are available:
+## Features
+- Add, edit, and delete expenses
+- Categorize expenses 
+- View total spending and category-wise breakdown
+- Graphical representation of expenses
+- User authentication (optional)
+- # Voice Assistant: Get the top 5 restaurants in a city by providing the city name(real time data)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- **Frontend:** HTML, CSS, JavaScript (or React/Next.js if applicable)
+- **Database:**Firebase
 
-## Expanding the ESLint configuration
+## Installation
+1. Clone the repository:
+   ```sh
+[   git clone https://github.com/yourusername/expense-tracker.git
+   cd expense-tracker](https://github.com/raju0076/expencetracker/edit/main/tracker)
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm start
+   ```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Usage
+- Open the application in your browser.
+- Sign up/log in (if authentication is enabled).
+- Add expenses with details like amount, category, and date.
+- View and analyze your spending habits.
+
+## Contributing
+Contributions are welcome! Feel free to fork the repository and create a pull request with your improvements.
+
+
+
+## Contact
+For any queries, reach out to [gnraju0076@gmail.com].
+
