@@ -1,47 +1,102 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // ✅ Correct import
-import './App.css';
-import { Navbar } from './components/common/Navbar';
-import {  Expense } from './pages/Dashboard';
-import { History } from './pages/History';
-import { Analytics } from './pages/Analytics';
-import { Home } from './pages/HomePage';
-import { LiveAnimaton } from './components/LiveAnimaton';
-import VoiceRecorder from './pages/Mic';
-import Restaurants from './components/rest';
-import {SignUp} from './pages/SignUp';
-import {SignIn} from './pages/SignIn'
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import {ToastContainer} from 'react-toastify'
+import SignInForm from "./pages/SignIn";
+import Signup from "./components/SignUp";
+import { Dashboard } from "./pages/Dashboard";
+import { Analytics } from "./pages/Analytics";
+import { VoiceRecorder } from "./pages/Mic";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { Navbar } from "./components/common/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { HomePage } from "./pages/HomePage";
 
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-
-function App() {
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("https://productlab-4.onrender.com/users/verify", {
+          credentials: "include",
+        });
+        setIsAuthenticated(res.ok);
+      } catch {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
-    <BrowserRouter> 
-      <Navbar />
-      <div className="App">
-        <div className="auth-wrapper">
-          <div className="auth-inner">
-              <Routes>
-                <Route path='/LiveAnimation' element={<LiveAnimaton/>}/>
-                <Route path='/HomePage' element={<Home />}/>
-                <Route path="/Home" element={<Home />} />
-                <Route path="/Dashboard" element={<Expense />} />
-                <Route path="/Analytics" element={<Analytics/>} />
-                <Route path="/History" element={<History />} />
-                <Route path='/Mic' element={<VoiceRecorder/>}/>
-                <Route path="/rest" element={<Restaurants />}/>
-                <Route path='*' element={<SignIn/>} />
-                <Route path='/SignUp' element={<SignUp/>} />
-                <Route path='/SignIn' element={<SignIn/>} />
-              </Routes>
-              <ToastContainer/>
-          </div>
-        </div>
-      </div>
-    </BrowserRouter>
+    <Router>
+      <ToastContainer />
+      <Routes>
+        {/* Redirect root based on auth */}
+        <Route
+          path="/"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/signin" />}
+        />
+
+        {/* Auth Routes */}
+        <Route path="/signin" element={<SignInForm setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Protected Routes with Navbar and setIsAuthenticated passed */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <>
+                <Navbar setIsAuthenticated={setIsAuthenticated} />
+                <Dashboard />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <>
+                <Navbar setIsAuthenticated={setIsAuthenticated} />
+                <Analytics />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/mic"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <>
+                <Navbar setIsAuthenticated={setIsAuthenticated} />
+                <VoiceRecorder />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <>
+                <Navbar setIsAuthenticated={setIsAuthenticated} />
+                <HomePage />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback route */}
+        <Route path="*" element={<Navigate to="/home" />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

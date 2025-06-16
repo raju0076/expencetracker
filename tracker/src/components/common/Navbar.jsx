@@ -1,39 +1,47 @@
-import React, { useState } from "react";
-import { House, ChartPie, History, Mic } from "lucide-react";
+import React from "react";
+import { House, ChartPie, Mic } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import SignOutButton from "../../pages/SignOutButton";
 
-
-export const Navbar = () => {
+export const Navbar = ({ setIsAuthenticated }) => {
   return (
-    <nav className="flex items-center justify-around fixed top-0 left-0 z-50 w-full box-border bg-blue-100 p-3 shadow-md font-bold">
-      <div className="flex items-center gap-2  hover:scale-105 hover: fluctuate-effect cursor-pointer hover:text-green-700">
-        <Link to="/Home">
-          <span className="text-red-500 text-4xl">X</span>pensr
-        </Link>
-      </div>
+    <nav
+      className="fixed top-0 left-0 z-50 w-full backdrop-blur-md shadow-md font-semibold border-b border-white/20"
+      style={{
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        padding: "1rem 2rem",
+      }}
+    >
+      <div className="flex items-center justify-between">
+        {/* Brand */}
+        <div className="flex items-center gap-2 hover:scale-105 transition cursor-pointer hover:text-green-700">
+          <Link to="/home" className="flex items-center text-xl">
+            <span className="text-red-500 text-3xl font-extrabold">X</span>pensr
+          </Link>
+        </div>
 
-      <div className="flex items-center gap-2  hover:scale-105 hover:fluctuate-effect cursor-pointer hover:text-green-900">
-        <House size={20} />
-        <Link to="/Dashboard">Dashboard</Link>
-      </div>
+        {/* Navigation Links */}
+        <div className="flex items-center gap-6 text-md">
+          <Link to="/dashboard" className="flex items-center gap-1 hover:text-green-900 transition">
+            <House size={20} />
+            Dashboard
+          </Link>
 
-      <div className="flex items-center gap-2  hover:scale-105 hover:fluctuate-effect cursor-pointer hover:text-green-700">
-        <ChartPie size={20} />
-        <Link to="/analytics">Analytics</Link>
-      </div>
+          <Link to="/analytics" className="flex items-center gap-1 hover:text-green-700 transition">
+            <ChartPie size={20} />
+            Analytics
+          </Link>
 
-      <div className="text-Blue-700  hover:scale-105 hover: fluctuate-effect cursor-pointer hover:text-green-700">
-        <Link to="/Mic">
-          <Mic size={24} className="hover:scale-150 transition-all" />
-        </Link>
-      </div>
+          <Link to="/mic" className="flex items-center gap-1 hover:text-green-700 transition">
+            <Mic size={20} />
+            Voice
+          </Link>
+        </div>
 
-      <div className="flex items-center gap-2  ">
-       
-        <Link to="/SignUp" className="hover:scale-105 hover:fluctuate-effect cursor-pointer hover:text-purple-700">  Sign Up</Link><span className="text-black">|</span>
-        <Link to="/SignIn" className="hover:scale-105 hover:fluctuate-effect cursor-pointer hover:text-pink-700">Sign In</Link>
-
+        {/* Sign Out */}
+        <div>
+          <SignOutButton setIsAuthenticated={setIsAuthenticated} />
+        </div>
       </div>
     </nav>
   );

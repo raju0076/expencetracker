@@ -1,6 +1,5 @@
 import { ADD_CITY, ADD_EXPENSE, DELETE_EXPENSE, EDIT_EXPENSE, RESET_FORM, SET_BUDGET } from "./actionType";
 
-// Function to load saved state from localStorage
 const loadState = () => {
     try {
         const serializedState = localStorage.getItem("expenses");
@@ -13,7 +12,7 @@ const loadState = () => {
 
 export const initialState = {
     budget: 0,
-    expenses: loadState(), // Load saved expenses
+    expenses: loadState(),
     city: "",
     editExpense: {},  
     isEdit: false
@@ -28,7 +27,7 @@ export const expenseReducer = (state = initialState, action) => {
 
         case ADD_EXPENSE:
             updatedExpenses = [...state.expenses, action.payload];
-            localStorage.setItem("expenses", JSON.stringify(updatedExpenses)); // Save to localStorage
+            localStorage.setItem("expenses", JSON.stringify(updatedExpenses)); 
             return { 
                 ...state, 
                 expenses: updatedExpenses, 

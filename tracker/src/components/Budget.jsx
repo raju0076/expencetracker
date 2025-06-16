@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewBudget } from "../Redux/action";
-import { IndianRupee ,Plus} from "lucide-react";
+import { IndianRupee } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Budget = () => {
@@ -9,7 +9,7 @@ export const Budget = () => {
   const exp = useSelector((state) => state.expenses) || [];
   const newTotalBudget = useSelector((state) => state.budget);
 
-    const [budget, setBudget] = useState(() => {
+  const [budget, setBudget] = useState(() => {
     return Number(localStorage.getItem("totalBudget")) || 0;
   });
   const [displayBudget, setDisplayBudget] = useState(budget);
@@ -55,7 +55,12 @@ export const Budget = () => {
   }, []);
 
   return (
-    <div className="shadow-md p-4 mt-4 bg-white rounded-lg relative">
+    <div
+      className="shadow-md p-4 mt-4 rounded-lg relative backdrop-blur-md"
+      style={{
+        backgroundColor: "rgba(255, 255, 255, 0.75)",
+      }}
+    >
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4">
         <input
           onChange={(e) => setBudget(Number(e.target.value))}
@@ -63,7 +68,7 @@ export const Budget = () => {
           className="w-full md:w-2/4 py-2 px-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-blue-400 transition-all"
           type="text"
           placeholder="Enter Budget Amount"
-          value={budget === 0 ? "" : budget} 
+          value={budget === 0 ? "" : budget}
         />
 
         <button
@@ -77,29 +82,26 @@ export const Budget = () => {
           onClick={handleNewBudget}
           className="bg-green-500 text-white rounded-md py-2 px-4 w-full md:w-auto hover:scale-105 hover:shadow-lg cursor-pointer"
         >
-        New Budget
+          New Budget
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4 mt-6 text-center relative">
-        <div className="bg-blue-100 p-4 rounded-lg shadow flex items-center flex-col
-        hover:scale-105 hover:shadow-lg cursor-pointer">
+        <div className="bg-blue-100 p-4 rounded-lg shadow flex items-center flex-col hover:scale-105 hover:shadow-lg cursor-pointer">
           <p className="text-blue-600 font-semibold">Total Budget</p>
           <h1 className="text-xl font-bold flex items-center">
             <IndianRupee size={16} /> {displayBudget.toLocaleString("en-IN")}
           </h1>
         </div>
 
-        <div className="bg-red-100 p-4 rounded-lg shadow flex items-center flex-col
-        hover:scale-105 hover:shadow-lg cursor-pointer">
+        <div className="bg-red-100 p-4 rounded-lg shadow flex items-center flex-col hover:scale-105 hover:shadow-lg cursor-pointer">
           <p className="text-red-600 font-semibold">Total Expenses</p>
           <h1 className="text-xl font-bold flex items-center">
             <IndianRupee size={16} /> {TotalExpenses.toLocaleString("en-IN")}
           </h1>
         </div>
 
-        <div className="bg-green-50 p-4 rounded-lg shadow flex items-center flex-col
-        hover:scale-105 hover:shadow-lg cursor-pointer">
+        <div className="bg-green-50 p-4 rounded-lg shadow flex items-center flex-col hover:scale-105 hover:shadow-lg cursor-pointer">
           <p className="text-green-600 font-semibold">Remaining</p>
           <h1 className="text-xl font-bold flex items-center">
             <IndianRupee size={16} /> {Remaining.toLocaleString("en-IN")}
@@ -124,9 +126,9 @@ export const Budget = () => {
       </div>
 
       {showAlert && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div
-            className="bg-white p-4 rounded-lg shadow-lg text-center"
+            className="p-4 rounded-lg shadow-lg text-center"
             style={{
               backgroundImage:
                 "url('https://img.freepik.com/free-vector/modern-futuristic-black-red-esport-background_331749-854.jpg')",

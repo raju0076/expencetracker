@@ -1,81 +1,108 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
-import { auth } from '../components/firebase';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
-export const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+const SignInForm = ({ setIsAuthenticated }) => {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success("User logged in successfully!", { position: "top-center" });
+      const res = await fetch("https://productlab-4.onrender.com/users/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+        credentials: "include",
+      });
 
-      setTimeout(() => {
-        navigate("/Homepage"); 
-      }, 2000);
-    } catch (error) {
-      toast.error(error.message, { position: "top-center" });
+      const data = await res.json();
+
+      if (res.ok) {
+        navigate("/");
+        setFormData({ email: "", password: "" });
+        setIsAuthenticated(true);
+      } else {
+        toast.error(data.message || "Sign in failed", {
+          autoClose: 2000,
+        });
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 mt-10">
-      <div className="w-full max-w-md bg-[url('https://previews.123rf.com/images/virtosmedia/virtosmedia2303/virtosmedia230303665/199434354-3d-abstract-background-with-geometric-forms-3d-render-illustration.jpg')] bg-center bg-cover shadow-lg rounded-lg p-8">
-        <h1 className="text-4xl font-bold text-center text-black-700">Sign In</h1>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <div
+      className="min-h-screen flex items-center justify-start bg-cover bg-center px-8"
+      style={{
+        backgroundImage: `url('https://png.pngtree.com/thumb_back/fh260/background/20230525/pngtree-bitcoin-cryptocurrency-and-the-future-of-trading-portfolio-image_2630340.jpg')`,
+      }}
+    >
+      <div className="backdrop-blur-xl bg-white/10 border border-purple-300/30 shadow-2xl rounded-3xl p-10 w-full max-w-md mt-10">
+        <h2 className="text-3xl font-extrabold text-center text-white mb-8 tracking-wide">
+          Welcome Back
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-lg font-medium text-black-600"><strong>Email</strong></label>
+            <label className="block text-sm font-semibold text-purple-200 mb-1">
+              Email
+            </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Your Email"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              name="email"
               required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border border-purple-300 bg-white/20 text-white placeholder-purple-100 focus:outline-none focus:ring-2 focus:ring-purple-400 backdrop-blur-md transition"
+              placeholder="you@example.com"
             />
           </div>
-
-          <div className="relative">
-            <label className="block text-lg font-medium text-black-600"><strong>Password</strong></label>
+          <div>
+            <label className="block text-sm font-semibold text-purple-200 mb-1">
+              Password
+            </label>
             <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} 
-              placeholder="Enter Your Password"
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 pr-10"
+              type="password"
+              name="password"
               required
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-lg border border-purple-300 bg-white/20 text-white placeholder-purple-100 focus:outline-none focus:ring-2 focus:ring-purple-400 backdrop-blur-md transition"
+              placeholder="••••••••"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-5 flex items-center mt-5 text-black-600 text-lg"
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
           </div>
-
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600 transition-all"
+            className="w-full bg-gradient-to-r from-purple-600 to-purple-800 text-white py-2 rounded-lg hover:from-pink-500 hover:to-purple-700 transition-all shadow-lg"
           >
             Sign In
           </button>
-
-          <p className="text-sm text-center text-black-600">
-            Don't have an account?
-            <a href="/SignUp" className="text-black-500 font-bold hover:underline ml-1">Sign Up</a>
-          </p>
         </form>
+
+        <p className="mt-6 text-center text-sm text-purple-100">
+          Don’t have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-green-400 font-medium hover:underline hover:text-red-500 transition"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 };
+
+export default SignInForm;
