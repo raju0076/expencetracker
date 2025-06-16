@@ -8,6 +8,7 @@ import { Footer } from './Footer';
 
 
 
+
 export const LiveAnimaton = () => {
 const navigate=useNavigate()
 
@@ -17,21 +18,21 @@ const navigate=useNavigate()
 <div className='Live'>
 
   <div className="bubble">
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
-    <img src="/src/assets/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
+    <img src="/images/bubble.png" alt="buble" />
   </div>
 
  
