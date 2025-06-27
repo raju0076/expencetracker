@@ -24,7 +24,7 @@ export const Dashboard = () => {
 
         <Budget />
         <ExpenseForm />
-        <ExpenseTable delete={true} />
+        <ExpenseTable canDelete={true} />
       </motion.div>
     </div>
   );
